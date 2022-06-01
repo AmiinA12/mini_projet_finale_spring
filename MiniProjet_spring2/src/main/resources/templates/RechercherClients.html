@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	layout:decorator="navbar">
+<link rel="stylesheet" type="text/css" href="webjars/bootstrap/4.0.0/css/bootstrap.min.css" />
+
+<head>
+	<meta charset="utf-8">
+	<title>Liste des clients</title>
+</head>
+
+<body>
+	<div layout:fragment="Mynavbar">
+		<div class="container mt-5">
+			<div class="card">
+
+
+				<div class="card-header d-flex">
+					<h4 class="mt-2">Liste clients </h4>
+					<form class="form-inline ml-auto" th:action="@{RechercherClient}" method="POST">
+						<div class="md-form my-0">
+							<input type="search" class="form-control" placeholder="Rechercher Par IdCommande"
+								name="idCom" th:value="${idCom}" />
+						</div>
+						<input type='submit' class="btn btn-outline-white btn-md my-0 ml-sm-2" value='recherche'>
+					</form>
+				</div>
+				<div class="card-body">
+					<table class="table table-striped" style="text-align: center;">
+						<tr>
+							<th>ID</th>
+							<th>Nom client</th>
+							<th>telephone</th>
+							<th>Id Commande</th>
+							<th>Actions</th>
+						</tr>
+						<tr th:each="p :${clients}">
+							<td th:text="${p.idClient}"></td>
+							<td th:text="${p.nomClient}"></td>
+							<td th:text="${p.telephone}"></td>
+							<td th:text="${p.commande.idCom}"></td>
+
+							<td><a class="btn btn-danger" onclick="return confirm('Etes-vous sur ?')"
+									th:href="@{supprimerClient(id=${p.idClient})}">Supprimer</a> &nbsp;
+								<a class="btn btn-success" th:href="@{modifierClient(id=${p.idClient})}">Editer</a>
+						</tr>
+					</table>
+
+
+				</div>
+			</div>
+		</div>
+	</div>
+</body>
+
+</html>

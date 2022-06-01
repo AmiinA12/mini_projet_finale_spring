@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	layout:decorator="navbar">
+<link rel="stylesheet" type="text/css" href="/webjars/bootstrap/4.3.1/css/bootstrap.min.css" />
+
+<head>
+	<meta charset="utf-8">
+	<title>Ajout des Clients</title>
+</head>
+
+<body>
+	<div layout:fragment="Mynavbar">
+		<div class="container mt-5">
+			<div class="card">
+				<div class="card-header" th:if="${mode=='new'}">
+					<h1 style="text-align:center;color:rgb(0, 43, 85);">Ajout des Clients</h1>
+				</div>
+				<div class="card-header" th:if="${mode=='edit'}">
+					<h1 style="text-align:center;color:rgb(0, 43, 85);">Modification des Clients</h1>
+				</div>
+				<div class="card-body">
+					<form th:action="@{saveClient}" method="post">
+						<div class="form-group">
+							<label hidden class="control-label">ID Client :</label>
+							<input type="text"  hidden name="idClient" class="form-control" th:value="${client.idClient}" />
+						</div>
+						<div class="form-group">
+							<label class="control-label">Nom Client :</label>
+							<input type="text" name="nomClient" class="form-control" th:value="${client.nomClient}" />
+							<span th:errors=${client.nomClient} class="text-dangeSr"> </span>
+						</div>
+						<div class="form-group">
+							<label class="control-label">Telephone:</label>
+							<input type="text" name="telephone" class="form-control" th:value="${client.telephone}" />
+							<span th:errors=${client.telephone} class="text-danger"> </span>
+						</div>
+						<div th:if="${mode!='edit'}">
+							<div class="form-group">
+								<label class="control-label">Id Commande :</label>
+								<select name="commande" class="form-control">
+									<option th:each="c : ${commandes}" th:value="${c.idCom}" th:text="${c.idCom}">
+									</option>
+								</select>
+							</div>
+						</div>
+						<div th:if="${mode=='edit'}">
+							<div class="form-group">
+								<label class="control-label">Categorie :</label>
+								<select name="commande" class="form-control">
+									<option th:value="${client.commande.idCom}" th:text="${client.commande.idCom}"
+										selected></option>
+									<option th:each="c : ${commandes}" th:value="${c.idCom}" th:text="${c.idCom}">
+									</option>
+								</select>
+							</div>
+						</div>
+						<div style="text-align:center;margin-top:20px;">
+							<a th:href="@{ListeClient}"><button type="button"
+									class="btn btn-secondary">Annuler</button></a>
+							<button type="submit" class="btn btn-primary">Valider</button>
+						</div>
+				</div>
+				</form>
+			</div>
+		</div>
+	</div>
+	</div>
+</body>
+
+</html>
+!
